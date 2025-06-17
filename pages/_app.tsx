@@ -1,12 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { AppProps } from 'next/app';
 import { Provider as AppBridgeProvider } from '@shopify/app-bridge-react';
 import { AppProvider as PolarisProvider } from '@shopify/polaris';
 import en from '@shopify/polaris/locales/en.json';
 import '@shopify/polaris/build/esm/styles.css';
-import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+
+function useEnsureHost() {
+  const router = useRouter();
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const host = params.get('host');
+      const shop = params.get('shop');
+      if (!host && shop) {
+        // Redirect to Shopify OAuth to get host
+        window.location.href = `/api/auth?shop=${shop}`;
+      }
+    }
+  }, [router]);
+}
 
 function MyApp({ Component, pageProps }: AppProps) {
+  useEnsureHost();
   const [host, setHost] = useState('');
 
   useEffect(() => {
