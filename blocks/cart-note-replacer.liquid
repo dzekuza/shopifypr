@@ -1,0 +1,50 @@
+{% comment %}
+  @name: cart-note-replacer
+  @author: Cart Note Replacer App
+  @description: Displays dynamic cart messages based on merchant-defined rules
+{% endcomment %}
+
+{% schema %}
+{
+  "name": "Cart Message",
+  "target": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "container_class",
+      "label": "Container Class",
+      "default": "cart-message-container"
+    },
+    {
+      "type": "select",
+      "id": "position",
+      "label": "Message Position",
+      "options": [
+        {
+          "value": "top",
+          "label": "Top of Cart"
+        },
+        {
+          "value": "bottom",
+          "label": "Bottom of Cart"
+        }
+      ],
+      "default": "top"
+    }
+  ]
+}
+{% endschema %}
+
+<div class="{{ block.settings.container_class }}" data-cart-message-block data-shop-id="{{ shop.id }}">
+  <!-- Dynamic message will be injected here -->
+</div>
+
+<script>
+  // Initialize cart message block
+  window.cartNoteReplacer = {
+    shopId: '{{ shop.id }}',
+    container: document.querySelector('[data-cart-message-block]')
+  };
+</script>
+
+{{ 'cart-note-replacer.js' | asset_url | script_tag }} 

@@ -1,0 +1,33 @@
+name = "Cart Note Replacer"
+client_id = "SHOPIFY_API_KEY"
+application_url = "http://localhost:3000"
+embedded = true
+
+[access_scopes]
+# Admin access scopes
+admin_api_access = true
+read_products = true
+write_products = true
+read_orders = true
+write_orders = true
+read_customers = true
+write_customers = true
+read_themes = true
+write_themes = true
+read_script_tags = true
+write_script_tags = true
+
+# Store access scopes
+store_content = true
+
+[webhooks]
+api_version = "2024-01"
+
+[pos]
+embedded = false
+
+[auth]
+redirect_urls = [
+    "http://localhost:3000/api/auth/callback",
+    "https://localhost:3000/api/auth/callback"
+] 
